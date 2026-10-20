@@ -11,7 +11,7 @@
 .question,.writing{padding:14px 15px;border:1px solid var(--line);border-radius:10px;margin:12px 0}.question p{margin:0 0 9px;font-weight:600}.qnum{color:var(--blue)}.options label{display:block;padding:7px;border-radius:6px;cursor:pointer}.options label:hover{background:#f0f7ff}.options input{accent-color:var(--blue);margin-right:7px}
 textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px solid #cbd7e2;border-radius:8px;font:inherit;resize:vertical}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}button{border:0;border-radius:8px;padding:12px 16px;font-size:1rem;font-weight:bold;cursor:pointer}button:disabled{cursor:not-allowed}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef4;color:var(--navy)}
-#results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}.batch-tools{margin:18px 0 24px;padding:14px;border:1px solid #cfe2f4;border-radius:12px;background:#f5faff}.batch-tools h3{margin:0 0 10px;color:var(--navy)}.batch-result,.batch-key{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#fff;border:1px solid var(--line)}.batch-key ol{padding-left:24px}.final-panel{margin-top:28px;padding:18px;border:2px solid var(--blue);border-radius:12px;background:#f5faff}.final-panel h2{margin-top:0}.final-button{font-size:1.1rem;padding:14px 20px}.final-panel #finalResults{display:none;margin-top:16px;padding:14px;background:#fff;border-radius:8px;border:1px solid var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
+#results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}.batch-tools{margin:18px 0 24px;padding:14px;border:1px solid #cfe2f4;border-radius:12px;background:#f5faff}.batch-tools h3{margin:0 0 10px;color:var(--navy)}.batch-result,.batch-key{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#fff;border:1px solid var(--line)}.batch-key ol{padding-left:24px}.individual-answer-button{margin-top:10px}.individual-answer{margin-top:10px;padding:12px;border:1px solid #b8e4d5;border-radius:8px;background:#f1faf6}.individual-answer p{margin:5px 0}.final-panel{margin-top:28px;padding:18px;border:2px solid var(--blue);border-radius:12px;background:#f5faff}.final-panel h2{margin-top:0}.final-button{font-size:1.1rem;padding:14px 20px}.final-panel #finalResults{display:none;margin-top:16px;padding:14px;background:#fff;border-radius:8px;border:1px solid var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
 @media(max-width:600px){body{padding:9px}.container{padding:13px}.hero{padding:20px 12px}}
 @media print{body{background:#fff;padding:0}.container{box-shadow:none}.actions{display:none}.question,.writing{break-inside:avoid}}
 </style></head><body><main class="container">
@@ -147,7 +147,10 @@ function render(){
     d.innerHTML='<p><span class="qnum">'+(i+1)+'.</span> '+q[1]+'</p>';
     const options=document.createElement("div"); options.className="options";
     q[2].forEach((v,j)=>options.innerHTML+='<label><input type="radio" name="q'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+v+'</label>');
-    d.appendChild(options); container.appendChild(d);
+    d.appendChild(options);
+    const answerArea=document.createElement('div'); answerArea.className='individual-answer'; answerArea.id='answer'+i; answerArea.style.display='none';
+    const answerButton=document.createElement('button'); answerButton.className='secondary individual-answer-button'; answerButton.id='showAnswer'+i; answerButton.textContent='Show Answer'; answerButton.disabled=true; answerButton.onclick=()=>toggleIndividualAnswer(i);
+    d.appendChild(answerButton); d.appendChild(answerArea); container.appendChild(d);
     if((i+1)%20===0){
       const batchStart=i-18,batchEnd=i+1,batchNum=batchEnd/20;
       const tools=document.createElement("div"); tools.className="batch-tools"; tools.id="batchTools"+batchNum;
@@ -174,6 +177,7 @@ function checkBatch(n){
     b.style.borderColor='#dce5ee';
     if(s){answered++;if(+s.value===q[3]){score++;b.style.borderColor='#15966b';}else{b.style.borderColor='#d95d5d';}}
     document.querySelectorAll('input[name="q'+i+'"]').forEach(input=>input.disabled=true);
+    const answerButton=document.querySelector('#showAnswer'+i); if(answerButton) answerButton.disabled=false;
   }
   checkedBatches.add(n);
   const result=document.querySelector('#batchResult'+n);result.style.display='block';
@@ -181,6 +185,13 @@ function checkBatch(n){
   const checkButton=document.querySelector('#batchTools'+n+' .primary');
   checkButton.disabled=true;checkButton.textContent='Checked — Answers Locked';checkButton.style.opacity='.65';
   buildBatchKey(n);
+}
+function toggleIndividualAnswer(i){
+  const area=document.querySelector('#answer'+i),q=examQ[i];
+  if(!checkedBatches.has(Math.floor(i/20)+1)) return;
+  if(area.style.display==='block'){area.style.display='none';return;}
+  area.innerHTML='<p><b>Correct answer: '+String.fromCharCode(65+q[3])+'. '+q[2][q[3]]+'</b></p><p>'+q[4]+'</p>';
+  area.style.display='block';
 }
 function toggleBatchKey(n){
   const key=document.querySelector('#batchKey'+n);
@@ -200,6 +211,8 @@ function resetExam(){
   document.querySelectorAll('input[type="radio"]').forEach(e=>{e.checked=false;e.disabled=false;});
   document.querySelectorAll('textarea').forEach(e=>e.value='');
   document.querySelectorAll('.question').forEach(e=>e.style.borderColor='#dce5ee');
+  document.querySelectorAll('.individual-answer').forEach(e=>{e.style.display='none';e.innerHTML='';});
+  document.querySelectorAll('.individual-answer-button').forEach(e=>e.disabled=true);
   document.querySelectorAll('.batch-result,.batch-key').forEach(e=>{e.style.display='none';});
   document.querySelectorAll('.batch-key div').forEach(e=>e.innerHTML='');
   document.querySelectorAll('.batch-tools .primary').forEach((button,index)=>{const n=index+1,r=batchRange(n);button.disabled=false;button.style.opacity='1';button.textContent='Check My Answers (Questions '+(r.start+1)+'–'+r.end+')';});
