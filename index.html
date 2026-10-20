@@ -11,7 +11,7 @@
 .question,.writing{padding:14px 15px;border:1px solid var(--line);border-radius:10px;margin:12px 0}.question p{margin:0 0 9px;font-weight:600}.qnum{color:var(--blue)}.options label{display:block;padding:7px;border-radius:6px;cursor:pointer}.options label:hover{background:#f0f7ff}.options input{accent-color:var(--blue);margin-right:7px}
 textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px solid #cbd7e2;border-radius:8px;font:inherit;resize:vertical}
 .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}button{border:0;border-radius:8px;padding:12px 16px;font-size:1rem;font-weight:bold;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef4;color:var(--navy)}
-#results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
+#results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}.batch-tools{margin:18px 0 24px;padding:14px;border:1px solid #cfe2f4;border-radius:12px;background:#f5faff}.batch-tools h3{margin:0 0 10px;color:var(--navy)}.batch-result,.batch-key{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#fff;border:1px solid var(--line)}.batch-key ol{padding-left:24px}.final-panel{margin-top:28px;padding:18px;border:2px solid var(--blue);border-radius:12px;background:#f5faff}.final-panel h2{margin-top:0}.final-button{font-size:1.1rem;padding:14px 20px}.final-panel #finalResults{display:none;margin-top:16px;padding:14px;background:#fff;border-radius:8px;border:1px solid var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
 @media(max-width:600px){body{padding:9px}.container{padding:13px}.hero{padding:20px 12px}}
 @media print{body{background:#fff;padding:0}.container{box-shadow:none}.actions{display:none}.question,.writing{break-inside:avoid}}
 </style></head><body><main class="container">
@@ -28,8 +28,8 @@ textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px soli
 <div class="writing"><b>3. Customer-service roleplay:</b> A customer is upset because a technical problem has not been solved. Acknowledge the problem, ask for details, and explain the next step.<textarea placeholder="Write your answer here..."></textarea></div>
 <div class="writing"><b>4. Storytelling:</b> Tell a short story about a problem you solved. Use at least three linking expressions, such as “first,” “while,” “eventually,” or “as a result.”<textarea placeholder="Write your answer here..."></textarea></div></section>
 <section class="section"><h2>Speaking Tasks — Practice</h2><div class="writing"><b>Task A — STAR:</b> Describe a challenge you faced. Include Situation, Task, Action, and Result.</div><div class="writing"><b>Task B — Customer service:</b> Explain how you would help a confused customer: show empathy, clarify the issue, offer a solution, and confirm understanding.</div><div class="writing"><b>Task C — Structured communication:</b> Answer: “What makes communication effective in a team?” State your point, support it with an example, and conclude clearly.</div></section>
-<div class="actions"><button class="primary" onclick="checkAnswers()">Check My Answers</button><button class="secondary" onclick="toggleKey()">Show / Hide Answer Key</button><button class="secondary" onclick="window.print()">Print Exam</button><button class="secondary" onclick="resetExam()">Reset</button></div>
-<div id="results" aria-live="polite"></div><div id="answerKey"><h3>Answer Key — Multiple Choice</h3><div id="keyContent"></div><p>Writing and speaking are not automatically graded. Assess accuracy, relevance, organization, vocabulary, pronunciation, and fluency.</p></div>
+<div class="actions"><button class="secondary" onclick="window.print()">Print Exam</button><button class="secondary" onclick="resetExam()">Reset All Answers</button></div>
+<div class="final-panel"><h2>Final Result</h2><p>After finishing all 100 questions, press the button below to calculate your total score.</p><button class="primary final-button" onclick="showFinalResult()">Show Final Result</button><div id="finalResults" aria-live="polite"></div></div>
 <footer>Practice exam based on the shared English-course topics. Not an official certificate exam.</footer></main>
 <script>
 const Q=[
@@ -138,9 +138,45 @@ Q.push(
 ["pronunciation","Why do speakers use intonation?",["To communicate meaning, attitude, and whether an utterance continues or ends","Only to make speech louder","To replace consonants","To remove sentence stress"],0,"Pitch movement helps convey meaning, attitude, and discourse structure."]
 );
 
-function render(){const el={grammar:document.querySelector("#grammar"),vocabulary:document.querySelector("#vocabulary"),frameworks:document.querySelector("#frameworks"),pronunciation:document.querySelector("#pronunciation")};Q.forEach((q,i)=>{let d=document.createElement("div");d.className="question";d.id="qbox"+i;d.innerHTML='<p><span class="qnum">'+(i+1)+'.</span> '+q[1]+'</p>';let o=document.createElement("div");o.className="options";q[2].forEach((v,j)=>o.innerHTML+='<label><input type="radio" name="q'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+v+'</label>');d.appendChild(o);el[q[0]].appendChild(d)})}
-function checkAnswers(){let score=0,answered=0,lines=[];Q.forEach((q,i)=>{let s=document.querySelector('input[name="q'+i+'"]:checked'),b=document.querySelector("#qbox"+i);b.style.borderColor="#dce5ee";if(s){answered++;if(+s.value===q[3]){score++;b.style.borderColor="#15966b"}else b.style.borderColor="#d95d5d"}lines.push('<li><b>'+(i+1)+'. '+String.fromCharCode(65+q[3])+'. '+q[2][q[3]]+'</b> — '+q[4]+'</li>')});document.querySelector("#results").style.display="block";document.querySelector("#results").innerHTML='<h2>Your Results</h2><p><b>Score: '+score+' / '+Q.length+' ('+Math.round(score/Q.length*100)+'%)</b></p><p>You answered '+answered+' of '+Q.length+' questions. Review the explanations in the answer key. The scored questions cover grammar, vocabulary, communication frameworks, and pronunciation.</p>';document.querySelector("#keyContent").innerHTML='<ol>'+lines.join("")+'</ol>';document.querySelector("#answerKey").style.display="block";document.querySelector("#results").scrollIntoView({behavior:"smooth"})}
-function toggleKey(){let e=document.querySelector("#answerKey");e.style.display=e.style.display==="block"?"none":"block"}
-function resetExam(){document.querySelectorAll('input[type=radio]').forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll(".question").forEach(e=>e.style.borderColor="#dce5ee");document.querySelector("#results").style.display="none";document.querySelector("#answerKey").style.display="none";scrollTo({top:0,behavior:"smooth"})}
+function render(){
+  const containers={grammar:document.querySelector("#grammar"),vocabulary:document.querySelector("#vocabulary"),frameworks:document.querySelector("#frameworks"),pronunciation:document.querySelector("#pronunciation")};
+  Q.forEach((q,i)=>{
+    const d=document.createElement("div"); d.className="question"; d.id="qbox"+i;
+    d.innerHTML='<p><span class="qnum">'+(i+1)+'.</span> '+q[1]+'</p>';
+    const options=document.createElement("div"); options.className="options";
+    q[2].forEach((v,j)=>options.innerHTML+='<label><input type="radio" name="q'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+v+'</label>');
+    d.appendChild(options); containers[q[0]].appendChild(d);
+    if((i+1)%20===0){
+      const batchStart=i-19,batchEnd=i+1,batchNum=batchEnd/20;
+      const tools=document.createElement("div"); tools.className="batch-tools"; tools.id="batchTools"+batchNum;
+      tools.innerHTML='<h3>Questions '+batchStart+'–'+batchEnd+'</h3><div class="actions" style="margin-top:0"><button class="primary" onclick="checkBatch('+batchNum+')">Check My Answers (Questions '+batchStart+'–'+batchEnd+')</button><button class="secondary" onclick="toggleBatchKey('+batchNum+')">Show / Hide Answer Key</button></div><div class="batch-result" id="batchResult'+batchNum+'" aria-live="polite"></div><div class="batch-key" id="batchKey'+batchNum+'"><h4>Answer Key — Questions '+batchStart+'–'+batchEnd+'</h4><div id="batchKeyContent'+batchNum+'"></div></div>';
+      d.insertAdjacentElement("afterend",tools);
+    }
+  });
+}
+function batchRange(n){return {start:(n-1)*20,end:Math.min(n*20,Q.length)};}
+function checkBatch(n){
+  const r=batchRange(n);let score=0,answered=0,lines=[];
+  for(let i=r.start;i<r.end;i++){
+    const q=Q[i],s=document.querySelector('input[name="q'+i+'"]:checked'),b=document.querySelector("#qbox"+i);b.style.borderColor="#dce5ee";
+    if(s){answered++;if(+s.value===q[3]){score++;b.style.borderColor="#15966b";}else{b.style.borderColor="#d95d5d";}}
+    lines.push('<li><b>'+(i+1)+'. '+String.fromCharCode(65+q[3])+'. '+q[2][q[3]]+'</b> — '+q[4]+'</li>');
+  }
+  const result=document.querySelector("#batchResult"+n);result.style.display="block";
+  result.innerHTML='<b>Score for questions '+(r.start+1)+'–'+r.end+': '+score+' / '+(r.end-r.start)+' ('+Math.round(score/(r.end-r.start)*100)+'%)</b><p>You answered '+answered+' of '+(r.end-r.start)+' questions in this group.</p>';
+  document.querySelector("#batchKeyContent"+n).innerHTML='<ol>'+lines.join("")+'</ol>';
+}
+function toggleBatchKey(n){const key=document.querySelector("#batchKey"+n);if(key.style.display==="block"){key.style.display="none";return;}if(!document.querySelector("#batchKeyContent"+n).innerHTML)checkBatch(n);key.style.display="block";}
+function showFinalResult(){
+  let score=0,answered=0;Q.forEach((q,i)=>{const s=document.querySelector('input[name="q'+i+'"]:checked');if(s){answered++;if(+s.value===q[3])score++;}});
+  const result=document.querySelector("#finalResults");result.style.display="block";
+  result.innerHTML='<h3>Your Final Result</h3><p><b>Total score: '+score+' / '+Q.length+' ('+Math.round(score/Q.length*100)+'%)</b></p><p>You answered '+answered+' of '+Q.length+' questions.</p><p>For detailed feedback, use the Check My Answers button after each group of 20 questions. Writing and speaking tasks are not included in this automatic score.</p>';
+  result.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function resetExam(){
+  document.querySelectorAll('input[type="radio"]').forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll(".question").forEach(e=>e.style.borderColor="#dce5ee");
+  document.querySelectorAll(".batch-result,.batch-key").forEach(e=>e.style.display="none");document.querySelectorAll(".batch-key div").forEach(e=>e.innerHTML="");
+  const final=document.querySelector("#finalResults");final.style.display="none";final.innerHTML="";scrollTo({top:0,behavior:"smooth"});
+}
 render();
 </script></body></html>
