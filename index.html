@@ -16,12 +16,9 @@ textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px soli
 @media print{body{background:#fff;padding:0}.container{box-shadow:none}.actions{display:none}.question,.writing{break-inside:avoid}}
 </style></head><body><main class="container">
 <header class="hero"><h1>Comprehensive English Exam</h1><p>Grammar • Vocabulary • Pronunciation • Communication Skills</p><div class="meta"><span>Level: B1–B2+</span><span>100 scored MCQs + Speaking & Writing practice</span><span>Suggested time: 60–75 minutes</span></div></header>
-<div class="note"><b>Instructions:</b> Choose one answer for each of the 100 multiple-choice questions. Read the pronunciation paragraph aloud, then complete the speaking and writing tasks. Press <i>Check My Answers</i> to see your score and explanations.</div>
+<div class="note"><b>Instructions:</b> Choose one answer for each of the 100 multiple-choice questions. Questions are numbered from 1 to 100 in order. Use the checking and answer-key buttons after each group of 20 questions, then view your final score at the end.</div>
 <section class="section"><h2 class="dark">Section 1 — Pronunciation & Fluency</h2><p><b>Read aloud.</b> Focus on <i>th</i> sounds, American <i>r</i>, the difference between <i>b</i> and <i>p</i>, connected speech, and natural sentence stress.</p><div class="question">Technology has changed the way people communicate at work. Although digital tools help teams solve problems quickly, successful communication still depends on listening carefully, asking clear questions, and showing empathy. When a customer reports a technical issue, a professional employee should remain calm, explain the next steps, and make sure the customer understands the solution.</div><ul><li>Are the <i>th</i> sounds clear?</li><li>Do you pronounce the <i>r</i> clearly in words such as “work” and “customer”?</li><li>Do you stress important words and pause naturally?</li></ul></section>
-<section class="section"><h2>Section 2 — Grammar (40 questions)</h2><div id="grammar"></div></section>
-<section class="section"><h2 class="teal">Section 3 — Vocabulary & Professional English (30 questions)</h2><div id="vocabulary"></div></section>
-<section class="section"><h2 class="dark">Section 4 — Communication Frameworks (20 questions)</h2><div id="frameworks"></div></section>
-<section class="section"><h2 class="teal">Section 5 — Pronunciation & Spoken English (10 questions)</h2><div id="pronunciation"></div></section>
+<section class="section"><h2>Multiple-Choice Exam — 100 Questions</h2><p>Questions are numbered consecutively and grouped into five sets of 20.</p><div id="allQuestions"></div></section>
 <section class="section"><h2 class="teal">Written Expression — Practice Tasks</h2><p>Use complete sentences, accurate grammar, varied vocabulary, linking words, and clear examples.</p>
 <div class="writing"><b>1. Career goals:</b> Describe your ideal career, why it suits you, and which skills you need to develop.<textarea placeholder="Write your answer here..."></textarea></div>
 <div class="writing"><b>2. Technology:</b> How has technology changed communication or education? Give at least two examples.<textarea placeholder="Write your answer here..."></textarea></div>
@@ -138,14 +135,19 @@ Q.push(
 ["pronunciation","Why do speakers use intonation?",["To communicate meaning, attitude, and whether an utterance continues or ends","Only to make speech louder","To replace consonants","To remove sentence stress"],0,"Pitch movement helps convey meaning, attitude, and discourse structure."]
 );
 
+const categoryOrder={grammar:0,vocabulary:1,frameworks:2,pronunciation:3};
+const examQ=[...Q].sort((a,b)=>categoryOrder[a[0]]-categoryOrder[b[0]]);
 function render(){
-  const containers={grammar:document.querySelector("#grammar"),vocabulary:document.querySelector("#vocabulary"),frameworks:document.querySelector("#frameworks"),pronunciation:document.querySelector("#pronunciation")};
-  Q.forEach((q,i)=>{
+  const container=document.querySelector("#allQuestions");
+  let lastCategory="";
+  const categoryTitles={grammar:"Section 2 — Grammar (40 questions)",vocabulary:"Section 3 — Vocabulary & Professional English (30 questions)",frameworks:"Section 4 — Communication Frameworks (20 questions)",pronunciation:"Section 5 — Pronunciation & Spoken English (10 questions)"};
+  examQ.forEach((q,i)=>{
+    if(q[0]!==lastCategory){const heading=document.createElement("h2");heading.className="section-category";heading.textContent=categoryTitles[q[0]];heading.style.cssText="background:#0878d1;color:white;padding:10px 14px;border-radius:8px;font-size:1.12rem;margin-top:24px";container.appendChild(heading);lastCategory=q[0];}
     const d=document.createElement("div"); d.className="question"; d.id="qbox"+i;
     d.innerHTML='<p><span class="qnum">'+(i+1)+'.</span> '+q[1]+'</p>';
     const options=document.createElement("div"); options.className="options";
     q[2].forEach((v,j)=>options.innerHTML+='<label><input type="radio" name="q'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+v+'</label>');
-    d.appendChild(options); containers[q[0]].appendChild(d);
+    d.appendChild(options); container.appendChild(d);
     if((i+1)%20===0){
       const batchStart=i-19,batchEnd=i+1,batchNum=batchEnd/20;
       const tools=document.createElement("div"); tools.className="batch-tools"; tools.id="batchTools"+batchNum;
@@ -154,11 +156,11 @@ function render(){
     }
   });
 }
-function batchRange(n){return {start:(n-1)*20,end:Math.min(n*20,Q.length)};}
+function batchRange(n){return {start:(n-1)*20,end:Math.min(n*20,examQ.length)};}
 function checkBatch(n){
   const r=batchRange(n);let score=0,answered=0,lines=[];
   for(let i=r.start;i<r.end;i++){
-    const q=Q[i],s=document.querySelector('input[name="q'+i+'"]:checked'),b=document.querySelector("#qbox"+i);b.style.borderColor="#dce5ee";
+    const q=examQ[i],s=document.querySelector('input[name="q'+i+'"]:checked'),b=document.querySelector("#qbox"+i);b.style.borderColor="#dce5ee";
     if(s){answered++;if(+s.value===q[3]){score++;b.style.borderColor="#15966b";}else{b.style.borderColor="#d95d5d";}}
     lines.push('<li><b>'+(i+1)+'. '+String.fromCharCode(65+q[3])+'. '+q[2][q[3]]+'</b> — '+q[4]+'</li>');
   }
@@ -168,9 +170,9 @@ function checkBatch(n){
 }
 function toggleBatchKey(n){const key=document.querySelector("#batchKey"+n);if(key.style.display==="block"){key.style.display="none";return;}if(!document.querySelector("#batchKeyContent"+n).innerHTML)checkBatch(n);key.style.display="block";}
 function showFinalResult(){
-  let score=0,answered=0;Q.forEach((q,i)=>{const s=document.querySelector('input[name="q'+i+'"]:checked');if(s){answered++;if(+s.value===q[3])score++;}});
+  let score=0,answered=0;examQ.forEach((q,i)=>{const s=document.querySelector('input[name="q'+i+'"]:checked');if(s){answered++;if(+s.value===q[3])score++;}});
   const result=document.querySelector("#finalResults");result.style.display="block";
-  result.innerHTML='<h3>Your Final Result</h3><p><b>Total score: '+score+' / '+Q.length+' ('+Math.round(score/Q.length*100)+'%)</b></p><p>You answered '+answered+' of '+Q.length+' questions.</p><p>For detailed feedback, use the Check My Answers button after each group of 20 questions. Writing and speaking tasks are not included in this automatic score.</p>';
+  result.innerHTML='<h3>Your Final Result</h3><p><b>Total score: '+score+' / '+examQ.length+' ('+Math.round(score/examQ.length*100)+'%)</b></p><p>You answered '+answered+' of '+examQ.length+' questions.</p><p>For detailed feedback, use the Check My Answers button after each group of 20 questions. Writing and speaking tasks are not included in this automatic score.</p>';
   result.scrollIntoView({behavior:"smooth",block:"center"});
 }
 function resetExam(){
