@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Comprehensive English Exam</title>
+<style>
+:root{--blue:#0878d1;--navy:#20364b;--teal:#0d9488;--bg:#f3f6fa;--ink:#243447;--line:#dce5ee}
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);margin:0;padding:20px;color:var(--ink);line-height:1.55}
+.container{max-width:960px;margin:auto;background:#fff;padding:clamp(16px,4vw,36px);border-radius:16px;box-shadow:0 8px 30px #1c344d18}
+.hero{background:linear-gradient(135deg,#18354e,#0878d1);color:white;padding:28px;border-radius:13px;text-align:center}h1{margin:0;font-size:clamp(1.6rem,4vw,2.3rem)}.hero p{color:#e9f4ff}
+.meta{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}.meta span{background:#ffffff20;border:1px solid #ffffff40;padding:5px 11px;border-radius:24px;font-size:.9rem}
+.note{background:#eef8ff;border-left:4px solid var(--blue);padding:12px 15px;border-radius:7px;margin:22px 0}.section{margin-top:28px}.section h2{background:var(--blue);color:#fff;padding:10px 14px;border-radius:8px;font-size:1.18rem}.teal{background:var(--teal)!important}.dark{background:var(--navy)!important}
+.question,.writing{padding:14px 15px;border:1px solid var(--line);border-radius:10px;margin:12px 0}.question p{margin:0 0 9px;font-weight:600}.qnum{color:var(--blue)}.options label{display:block;padding:7px;border-radius:6px;cursor:pointer}.options label:hover{background:#f0f7ff}.options input{accent-color:var(--blue);margin-right:7px}
+textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px solid #cbd7e2;border-radius:8px;font:inherit;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}button{border:0;border-radius:8px;padding:12px 16px;font-size:1rem;font-weight:bold;cursor:pointer}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef4;color:var(--navy)}
+#results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
+@media(max-width:600px){body{padding:9px}.container{padding:13px}.hero{padding:20px 12px}}
+@media print{body{background:#fff;padding:0}.container{box-shadow:none}.actions{display:none}.question,.writing{break-inside:avoid}}
+</style></head><body><main class="container">
+<header class="hero"><h1>Comprehensive English Exam</h1><p>Grammar • Vocabulary • Pronunciation • Communication Skills</p><div class="meta"><span>Level: B1–B2+</span><span>100 scored MCQs + Speaking & Writing practice</span><span>Suggested time: 60–75 minutes</span></div></header>
+<div class="note"><b>Instructions:</b> Choose one answer for each of the 100 multiple-choice questions. Read the pronunciation paragraph aloud, then complete the speaking and writing tasks. Press <i>Check My Answers</i> to see your score and explanations.</div>
+<section class="section"><h2 class="dark">Section 1 — Pronunciation & Fluency</h2><p><b>Read aloud.</b> Focus on <i>th</i> sounds, American <i>r</i>, the difference between <i>b</i> and <i>p</i>, connected speech, and natural sentence stress.</p><div class="question">Technology has changed the way people communicate at work. Although digital tools help teams solve problems quickly, successful communication still depends on listening carefully, asking clear questions, and showing empathy. When a customer reports a technical issue, a professional employee should remain calm, explain the next steps, and make sure the customer understands the solution.</div><ul><li>Are the <i>th</i> sounds clear?</li><li>Do you pronounce the <i>r</i> clearly in words such as “work” and “customer”?</li><li>Do you stress important words and pause naturally?</li></ul></section>
+<section class="section"><h2>Section 2 — Grammar (40 questions)</h2><div id="grammar"></div></section>
+<section class="section"><h2 class="teal">Section 3 — Vocabulary & Professional English (30 questions)</h2><div id="vocabulary"></div></section>
+<section class="section"><h2 class="dark">Section 4 — Communication Frameworks (20 questions)</h2><div id="frameworks"></div></section>
+<section class="section"><h2 class="teal">Section 5 — Pronunciation & Spoken English (10 questions)</h2><div id="pronunciation"></div></section>
+<section class="section"><h2 class="teal">Written Expression — Practice Tasks</h2><p>Use complete sentences, accurate grammar, varied vocabulary, linking words, and clear examples.</p>
+<div class="writing"><b>1. Career goals:</b> Describe your ideal career, why it suits you, and which skills you need to develop.<textarea placeholder="Write your answer here..."></textarea></div>
+<div class="writing"><b>2. Technology:</b> How has technology changed communication or education? Give at least two examples.<textarea placeholder="Write your answer here..."></textarea></div>
+<div class="writing"><b>3. Customer-service roleplay:</b> A customer is upset because a technical problem has not been solved. Acknowledge the problem, ask for details, and explain the next step.<textarea placeholder="Write your answer here..."></textarea></div>
+<div class="writing"><b>4. Storytelling:</b> Tell a short story about a problem you solved. Use at least three linking expressions, such as “first,” “while,” “eventually,” or “as a result.”<textarea placeholder="Write your answer here..."></textarea></div></section>
+<section class="section"><h2>Speaking Tasks — Practice</h2><div class="writing"><b>Task A — STAR:</b> Describe a challenge you faced. Include Situation, Task, Action, and Result.</div><div class="writing"><b>Task B — Customer service:</b> Explain how you would help a confused customer: show empathy, clarify the issue, offer a solution, and confirm understanding.</div><div class="writing"><b>Task C — Structured communication:</b> Answer: “What makes communication effective in a team?” State your point, support it with an example, and conclude clearly.</div></section>
+<div class="actions"><button class="primary" onclick="checkAnswers()">Check My Answers</button><button class="secondary" onclick="toggleKey()">Show / Hide Answer Key</button><button class="secondary" onclick="window.print()">Print Exam</button><button class="secondary" onclick="resetExam()">Reset</button></div>
+<div id="results" aria-live="polite"></div><div id="answerKey"><h3>Answer Key — Multiple Choice</h3><div id="keyContent"></div><p>Writing and speaking are not automatically graded. Assess accuracy, relevance, organization, vocabulary, pronunciation, and fluency.</p></div>
+<footer>Practice exam based on the shared English-course topics. Not an official certificate exam.</footer></main>
+<script>
+const Q=[
+["grammar","My brother usually _____ to work by bus, but today he _____ from home.",["goes / works","is going / works","goes / is working","go / is working"],2,"Present Simple is for routines; Present Continuous is for a temporary action today."],
+["grammar","While I _____ to the customer, the system suddenly crashed.",["talked","was talking","have talked","am talking"],1,"Past Continuous describes an action in progress when another past event happened."],
+["grammar","I _____ the report yesterday, so I can send it now.",["have finished","finish","finished","had finish"],2,"“Yesterday” requires Past Simple."],
+["grammar","She _____ in customer service for three years, and she still works there.",["worked","has worked","had worked","is work"],1,"Present Perfect connects a past situation to the present."],
+["grammar","By the time we arrived, the meeting _____.",["already starts","has already started","had already started","was already start"],2,"Past Perfect marks the earlier of two past events."],
+["grammar","Look at those dark clouds! It _____ soon.",["will rain","is going to rain","rains","has rained"],1,"Going to is used for predictions based on present evidence."],
+["grammar","The interview _____ at 10:30 tomorrow, according to the schedule.",["starts","is start","will starting","start"],0,"Present Simple can describe fixed schedules."],
+["grammar","The new software _____ by the IT team last week.",["installed","was installed","has install","is installing"],1,"Past Simple passive = was/were + past participle."],
+["grammar","Could you give me _____ information about the course?",["a","an","some","many"],2,"Information is uncountable; use “some information.”"],
+["grammar","There are _____ applicants this year than last year.",["less","fewer","little","much"],1,"Use fewer with plural countable nouns."],
+["grammar","If water reaches 100°C at normal atmospheric pressure, it _____.",["boiled","will boil","boils","would boil"],2,"Zero Conditional: if + Present Simple, Present Simple."],
+["grammar","If I _____ more confident, I would apply for that position.",["am","were","will be","had been"],1,"Second Conditional describes an unreal present or future."],
+["grammar","If they had checked the address, they _____ the wrong office.",["would not visit","will not have visited","would not have visited","did not visit"],2,"Third Conditional: if + Past Perfect, would have + past participle."],
+["grammar","I’m not used to _____ in front of a large audience.",["speak","speaking","spoke","have speak"],1,"Be used to is followed by a noun or gerund."],
+["grammar","This is _____ most useful guide I’ve read about interviews.",["a","an","the","—"],2,"Use “the” with a superlative."],
+["vocabulary","Choose the closest meaning of “essential.”",["Unnecessary","Very important","Unusual","Temporary"],1,"Essential means necessary or very important."],
+["vocabulary","A customer who is “frustrated” is most likely _____.",["confused or upset","extremely relaxed","uninterested in everything","always satisfied"],0,"Frustrated means upset or annoyed because something is difficult."],
+["vocabulary","Which phrase best shows empathy to an upset customer?",["That is not my problem.","You should have known that.","I understand how frustrating this must be.","Calm down immediately."],2,"Empathy respectfully acknowledges the customer’s feelings."],
+["vocabulary","In a workplace, “meet a deadline” means to _____.",["finish by the required time","cancel a task","start a meeting late","change a job title"],0,"A deadline is the latest time by which work must be completed."],
+["vocabulary","Which word means to find the cause of a technical problem?",["Decorate","Diagnose","Advertise","Postpone"],1,"To diagnose a problem is to identify its cause."],
+["vocabulary","A “candidate” is someone who _____.",["applies for or is considered for a role","buys a product","repairs every computer","manages the weather"],0,"A candidate is a person considered for a position."],
+["vocabulary","Choose the best phrase to clarify a customer’s issue.",["Let me make sure I’ve understood the problem.","I will ignore that detail.","You are definitely wrong.","There is nothing to discuss."],0,"Restating the issue checks understanding."],
+["vocabulary","“Eventually” is closest in meaning to _____.",["immediately","in the end","for example","on the other hand"],1,"Eventually means in the end, usually after some time."],
+["vocabulary","Which is an example of a soft skill?",["Empathy","A software version number","A computer cable","A password"],0,"Empathy is an interpersonal skill."],
+["vocabulary","In recruitment, “qualifications” usually refers to _____.",["skills, training, or credentials relevant to a job","office furniture","the lunch menu","a customer complaint"],0,"Qualifications are relevant education, training, credentials, or skills."],
+["frameworks","In the STAR method, what does “A” stand for?",["Aim","Action","Answer","Assessment"],1,"STAR = Situation, Task, Action, Result."],
+["frameworks","After acknowledging a customer’s concern, what should you usually do next?",["Blame the customer","Clarify the issue and gather details","End the conversation","Promise anything"],1,"Clarify the issue before offering an appropriate solution."],
+["frameworks","Which is the most professional response when you do not know the answer yet?",["I don’t know. Goodbye.","That’s impossible.","Let me check the details and explain the available options.","Just search online."],2,"Be honest, calm, and action-oriented."],
+["frameworks","What is the purpose of “however” and “as a result”?",["Connect ideas and show relationships","Make every sentence longer","Replace all verbs","Avoid examples"],0,"Linking expressions show contrast, result, sequence, and other relationships."],
+["frameworks","Which sentence best demonstrates the “Result” part of STAR?",["I worked on a team.","My task was to call the customer.","I organized the steps and contacted IT.","The issue was resolved, and the customer confirmed the service worked."],3,"The Result explains the outcome of your actions."]
+];
+
+Q.push(
+["grammar","At the moment, the team _____ a new customer-service process.",["tests","is testing","tested","has test"],1,"Present Continuous describes an action happening around now."],
+["grammar","Water _____ at 100°C at normal atmospheric pressure.",["is boiling","boil","boils","boiled"],2,"Present Simple expresses general facts."],
+["grammar","We _____ the client last Monday.",["have called","called","had call","call"],1,"Use Past Simple for a completed event at a definite past time."],
+["grammar","When I arrived, my colleagues _____ the presentation.",["prepared","have prepared","were preparing","are preparing"],2,"Past Continuous describes an action in progress at a past moment."],
+["grammar","Have you ever _____ a complaint in English?",["handled","handle","handling","handles"],0,"Present Perfect uses have/has + past participle."],
+["grammar","I haven't received the confirmation _____.",["already","yet","ever","just"],1,"“Yet” is common in negative sentences and questions about expected events."],
+["grammar","She had _____ the file before the computer shut down.",["save","saved","saving","saves"],1,"Past Perfect = had + past participle."],
+["grammar","They were exhausted because they _____ all day.",["had been working","have worked","will work","are working"],0,"Past Perfect Continuous emphasizes duration before a past point."],
+["grammar","This time tomorrow, I _____ my final interview.",["take","will be taking","took","have taken"],1,"Future Continuous describes an action in progress at a future time."],
+["grammar","By next June, he _____ the training course.",["will complete","will have completed","completed","has complete"],1,"Future Perfect = will have + past participle, completed before a future point."],
+["grammar","The results _____ tomorrow morning.",["announce","will be announced","announced","are announcing"],1,"Future passive = will be + past participle."],
+["grammar","English _____ in many international workplaces.",["uses","is used","used","is using"],1,"Present Simple passive = am/is/are + past participle."],
+["grammar","She is _____ honest and reliable employee.",["a","an","the","no article"],1,"Use “an” before a vowel sound; “honest” begins with a silent h."],
+["grammar","I usually drink _____ coffee before work.",["a","an","the","no article"],3,"Use no article for coffee in a general, uncountable sense."],
+["grammar","There isn't _____ time left, so let's focus.",["many","much","few","several"],1,"Use much with uncountable nouns in negatives and questions."],
+["grammar","Only _____ candidates had the required experience.",["a little","a few","much","any"],1,"A few is used with plural countable nouns."],
+["grammar","If you heat ice, it _____.",["melted","melts","will melt","would melt"],1,"Zero Conditional describes predictable facts."],
+["grammar","If you practise every day, you _____ more fluent.",["became","would become","will become","had become"],2,"First Conditional: if + Present Simple, will + base verb."],
+["grammar","If I had accepted that job, I _____ in London now.",["would live","would have lived","will live","lived"],0,"Mixed Conditional can connect a past condition to a present result."],
+["grammar","I wish I _____ more time to prepare yesterday.",["have","had","had had","will have"],2,"Wish + Past Perfect expresses regret about the past."],
+["grammar","It's time we _____ the meeting.",["start","started","will start","have started"],1,"“It's time” + Past Simple can express that something should happen now."],
+["grammar","I used to _____ shy during interviews.",["be","being","was","been"],0,"Used to + base verb describes a past state or habit that changed."],
+["grammar","I'm getting used to _____ with international clients.",["work","worked","working","have worked"],2,"Get used to + noun or gerund describes becoming accustomed to something."],
+["grammar","This task is _____ than the previous one.",["more easy","easier","easiest","most easy"],1,"Short adjectives usually form the comparative with -er."],
+["grammar","“I like this plan.” “So _____ I.”",["do","am","have","did"],0,"Use so + auxiliary + subject to agree with an affirmative statement."],
+["vocabulary","A person who listens carefully and understands feelings shows _____.",["empathy","deadline","efficiency","recruitment"],0,"Empathy means understanding or sharing another person's feelings."],
+["vocabulary","What does “resolve an issue” mean?",["Make it worse","Solve it","Hide it","Delay it"],1,"Resolve means to solve or settle a problem."],
+["vocabulary","A “reliable” colleague is someone who _____.",["can be trusted","often forgets tasks","avoids communication","never learns"],0,"Reliable means dependable and trustworthy."],
+["vocabulary","Which word means “to make something better”?",["Improve","Postpone","Reject","Complain"],0,"Improve means to make or become better."],
+["vocabulary","In a call centre, “hold the line” means _____.",["stay on the phone","hang up immediately","send an invoice","change the password"],0,"The caller is asked to remain connected while the agent checks something."],
+["vocabulary","A customer says the app keeps freezing. This is a _____.",["technical issue","job offer","deadline","soft skill"],0,"A technical issue is a problem with a device, app, or system."],
+["vocabulary","Which is the best way to ask for more details politely?",["Explain yourself now.","Could you tell me exactly what happens?","That makes no sense.","Why didn't you fix it?"],1,"Polite clarification questions help gather useful information."],
+["vocabulary","“I’ll look into it” means _____.",["I will investigate it","I will ignore it","I have finished it","I disagree with you"],0,"Look into means investigate or examine."],
+["vocabulary","A “strength” in an interview is _____.",["a positive skill or quality","a technical failure","a complaint","a weakness only"],0,"A strength is a positive ability or characteristic."],
+["vocabulary","What is the opposite of “efficient”?",["productive","organized","wasteful","effective"],2,"Wasteful describes using time or resources poorly."],
+["vocabulary","“Collaborate” means to _____.",["work together","compete unfairly","work in silence only","cancel a project"],0,"Collaborate means work jointly with others."],
+["vocabulary","A “promotion” at work usually means _____.",["a move to a higher role","a customer refund","a software error","a missed deadline"],0,"A promotion is advancement to a more senior position."],
+["vocabulary","Which phrase is best for taking responsibility?",["That was someone else's fault.","I’ll take responsibility and fix what I can.","It doesn't matter.","Ask someone else."],1,"Professional communication includes ownership and a clear next step."],
+["vocabulary","“On the other hand” is used to introduce _____.",["a contrast or alternative view","a repeated greeting","a past habit only","a definition of a password"],0,"The phrase introduces a contrasting point."],
+["vocabulary","“As a result” introduces _____.",["a consequence","a greeting","a question tag","a job title"],0,"It signals the result or consequence of something."],
+["vocabulary","Which word relates to hiring people for jobs?",["Recruitment","Pronunciation","Wildlife","Substitution"],0,"Recruitment is the process of finding and hiring candidates."],
+["vocabulary","A “complaint” is _____.",["an expression of dissatisfaction","a confirmed solution","a training certificate","a friendly introduction"],0,"A complaint communicates dissatisfaction with a product or service."],
+["vocabulary","Which word means “able to change for a new situation”?",["Adaptable","Fragile","Unrelated","Delayed"],0,"Adaptable means able to adjust to new conditions."],
+["vocabulary","In a story, “suddenly” signals _____.",["an unexpected event","a final conclusion only","a job qualification","a polite request"],0,"Suddenly introduces an event that happens unexpectedly."],
+["vocabulary","Which phrase confirms that a customer understands?",["Does that make sense so far?","I won't explain it.","You should already know.","That's the end."],0,"Checking understanding helps ensure the explanation was clear."],
+["frameworks","In STAR, the “S” stands for _____.",["Solution","Situation","Summary","Skill"],1,"STAR begins with Situation."],
+["frameworks","In STAR, the “T” stands for _____.",["Time","Task","Technology","Team"],1,"Task explains your responsibility or goal in the situation."],
+["frameworks","Which is the strongest STAR Action statement?",["I had a difficult day.","I was responsible for the issue.","I checked the logs, contacted IT, and updated the customer.","The customer was unhappy."],2,"Action should explain the specific steps you personally took."],
+["frameworks","A good interview answer should usually be _____.",["relevant and supported with an example","very long and unrelated","only one vague word","critical of former colleagues"],0,"Relevant examples make answers clear and convincing."],
+["frameworks","When using a structured answer, what should the conclusion do?",["Summarize the main point","Introduce an unrelated problem","Repeat every sentence","Avoid answering"],0,"A conclusion reinforces the central message."],
+["frameworks","What should you do first when a customer is angry?",["Interrupt and argue","Acknowledge their concern calmly","Blame another department","End the call"],1,"Start by listening and acknowledging the concern respectfully."],
+["frameworks","Which sequence best supports customer service?",["Acknowledge, clarify, solve, confirm","Blame, delay, ignore, end","Promise, guess, argue, leave","Interrupt, reject, repeat, hang up"],0,"This sequence shows empathy, gathers facts, acts, and checks the outcome."],
+["frameworks","A professional apology should be _____.",["specific and sincere","sarcastic","conditional and blaming","avoided in every case"],0,"A sincere apology acknowledges the inconvenience without blaming the customer."],
+["frameworks","When escalating a technical issue, you should _____.",["share relevant details and explain the next step","send no information","promise an unverified deadline","make the customer start over without explanation"],0,"Good escalation gives the next team enough context and sets expectations."],
+["frameworks","What is active listening?",["Focusing, checking understanding, and responding to what was said","Waiting silently while planning your reply","Changing the topic","Repeating words without understanding"],0,"Active listening includes attention, clarification, and relevant responses."],
+["frameworks","Which is the clearest team update?",["Something happened.","The task is delayed because the system is down; I contacted IT and will update you by 2 p.m.","It's not my issue.","Maybe it will work sometime."],1,"Clear updates state the situation, action, and next update."],
+["frameworks","When giving feedback, it is best to focus on _____.",["specific behaviour and constructive next steps","personal insults","rumours","unrelated past mistakes"],0,"Constructive feedback is specific, respectful, and actionable."],
+["frameworks","What is the purpose of an acronym such as STAR?",["To provide a memorable structure","To replace all examples","To avoid explaining actions","To make an answer unclear"],0,"A framework helps organize information consistently."],
+["frameworks","Which answer demonstrates a result with evidence?",["It went well.","The customer was happy, and the repeat complaint rate fell the following month.","I tried hard.","We discussed the issue."],1,"Evidence makes the result more specific and convincing."],
+["frameworks","If you need time to check information, you should _____.",["be transparent and give a realistic next step","invent an answer","ignore the question","blame the customer"],0,"Honesty and clear expectations maintain trust."],
+["pronunciation","Which word begins with the voiced “th” sound /ð/?",["think","three","this","thank"],2,"“This” begins with /ð/, while think, three, and thank begin with /θ/."],
+["pronunciation","Which word begins with the voiceless “th” sound /θ/?",["they","those","there","think"],3,"“Think” begins with voiceless /θ/."],
+["pronunciation","Which pair differs mainly in the initial /b/ and /p/ sounds?",["berry / Perry","light / right","thin / then","ship / sheep"],0,"/b/ is voiced; /p/ is voiceless and often has a stronger puff of air."],
+["pronunciation","In many American accents, the “r” in “work” is _____.",["usually pronounced","always silent","pronounced like /l/","not part of the word"],0,"American English is generally rhotic, so /r/ is pronounced in work."],
+["pronunciation","Which word has the same vowel sound as “sheep” in many English accents?",["ship","sheep","shape","shop"],1,"Sheep has the long vowel /iː/; ship has the shorter /ɪ/."],
+["pronunciation","Which word has the short /ɪ/ sound?",["seat","leave","ship","beat"],2,"Ship contains /ɪ/, unlike the long /iː/ in seat, leave, and beat."],
+["pronunciation","What is sentence stress mainly used for?",["Highlighting important information","Pronouncing every word equally strongly","Removing all pauses","Changing every noun into a verb"],0,"Sentence stress helps listeners identify key information."],
+["pronunciation","Connected speech often means that words _____.",["link together naturally","must be pronounced separately","lose all meaning","are always spoken slowly"],0,"In fluent speech, sounds may link or change at word boundaries."],
+["pronunciation","Which word commonly has a dark /l/ sound at the end in many English accents?",["light","leaf","feel","lake"],2,"A dark /l/ commonly occurs at the end of a syllable, as in feel."],
+["pronunciation","Why do speakers use intonation?",["To communicate meaning, attitude, and whether an utterance continues or ends","Only to make speech louder","To replace consonants","To remove sentence stress"],0,"Pitch movement helps convey meaning, attitude, and discourse structure."]
+);
+
+function render(){const el={grammar:document.querySelector("#grammar"),vocabulary:document.querySelector("#vocabulary"),frameworks:document.querySelector("#frameworks"),pronunciation:document.querySelector("#pronunciation")};Q.forEach((q,i)=>{let d=document.createElement("div");d.className="question";d.id="qbox"+i;d.innerHTML='<p><span class="qnum">'+(i+1)+'.</span> '+q[1]+'</p>';let o=document.createElement("div");o.className="options";q[2].forEach((v,j)=>o.innerHTML+='<label><input type="radio" name="q'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+'. '+v+'</label>');d.appendChild(o);el[q[0]].appendChild(d)})}
+function checkAnswers(){let score=0,answered=0,lines=[];Q.forEach((q,i)=>{let s=document.querySelector('input[name="q'+i+'"]:checked'),b=document.querySelector("#qbox"+i);b.style.borderColor="#dce5ee";if(s){answered++;if(+s.value===q[3]){score++;b.style.borderColor="#15966b"}else b.style.borderColor="#d95d5d"}lines.push('<li><b>'+(i+1)+'. '+String.fromCharCode(65+q[3])+'. '+q[2][q[3]]+'</b> — '+q[4]+'</li>')});document.querySelector("#results").style.display="block";document.querySelector("#results").innerHTML='<h2>Your Results</h2><p><b>Score: '+score+' / '+Q.length+' ('+Math.round(score/Q.length*100)+'%)</b></p><p>You answered '+answered+' of '+Q.length+' questions. Review the explanations in the answer key. The scored questions cover grammar, vocabulary, communication frameworks, and pronunciation.</p>';document.querySelector("#keyContent").innerHTML='<ol>'+lines.join("")+'</ol>';document.querySelector("#answerKey").style.display="block";document.querySelector("#results").scrollIntoView({behavior:"smooth"})}
+function toggleKey(){let e=document.querySelector("#answerKey");e.style.display=e.style.display==="block"?"none":"block"}
+function resetExam(){document.querySelectorAll('input[type=radio]').forEach(e=>e.checked=false);document.querySelectorAll("textarea").forEach(e=>e.value="");document.querySelectorAll(".question").forEach(e=>e.style.borderColor="#dce5ee");document.querySelector("#results").style.display="none";document.querySelector("#answerKey").style.display="none";scrollTo({top:0,behavior:"smooth"})}
+render();
+</script></body></html>
