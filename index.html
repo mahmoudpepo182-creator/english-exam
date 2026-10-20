@@ -10,7 +10,7 @@
 .note{background:#eef8ff;border-left:4px solid var(--blue);padding:12px 15px;border-radius:7px;margin:22px 0}.section{margin-top:28px}.section h2{background:var(--blue);color:#fff;padding:10px 14px;border-radius:8px;font-size:1.18rem}.teal{background:var(--teal)!important}.dark{background:var(--navy)!important}
 .question,.writing{padding:14px 15px;border:1px solid var(--line);border-radius:10px;margin:12px 0}.question p{margin:0 0 9px;font-weight:600}.qnum{color:var(--blue)}.options label{display:block;padding:7px;border-radius:6px;cursor:pointer}.options label:hover{background:#f0f7ff}.options input{accent-color:var(--blue);margin-right:7px}
 textarea{width:100%;min-height:100px;margin-top:8px;padding:10px;border:1px solid #cbd7e2;border-radius:8px;font:inherit;resize:vertical}
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}button{border:0;border-radius:8px;padding:12px 16px;font-size:1rem;font-weight:bold;cursor:pointer}button:disabled{cursor:not-allowed}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef4;color:var(--navy)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}button{border:0;border-radius:8px;padding:12px 16px;font-size:1rem;font-weight:bold;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}.primary{background:var(--blue);color:#fff}.secondary{background:#e8eef4;color:var(--navy)}
 #results,#answerKey{display:none;margin-top:20px;padding:17px;border-radius:10px;background:#f1faf6;border:1px solid #b8e4d5}#answerKey{background:#f6f8fb;border-color:var(--line)}.batch-tools{margin:18px 0 24px;padding:14px;border:1px solid #cfe2f4;border-radius:12px;background:#f5faff}.batch-tools h3{margin:0 0 10px;color:var(--navy)}.batch-result,.batch-key{display:none;margin-top:12px;padding:12px;border-radius:8px;background:#fff;border:1px solid var(--line)}.batch-key ol{padding-left:24px}.individual-answer-button{margin-top:10px}.individual-answer{margin-top:10px;padding:12px;border:1px solid #b8e4d5;border-radius:8px;background:#f1faf6}.individual-answer p{margin:5px 0}.final-panel{margin-top:28px;padding:18px;border:2px solid var(--blue);border-radius:12px;background:#f5faff}.final-panel h2{margin-top:0}.final-button{font-size:1.1rem;padding:14px 20px}.final-panel #finalResults{display:none;margin-top:16px;padding:14px;background:#fff;border-radius:8px;border:1px solid var(--line)}footer{text-align:center;color:#627286;font-size:.85rem;margin-top:28px}
 @media(max-width:600px){body{padding:9px}.container{padding:13px}.hero{padding:20px 12px}}
 @media print{body{background:#fff;padding:0}.container{box-shadow:none}.actions{display:none}.question,.writing{break-inside:avoid}}
@@ -154,7 +154,7 @@ function render(){
     if((i+1)%20===0){
       const batchStart=i-18,batchEnd=i+1,batchNum=batchEnd/20;
       const tools=document.createElement("div"); tools.className="batch-tools"; tools.id="batchTools"+batchNum;
-      tools.innerHTML='<h3>Questions '+batchStart+'–'+batchEnd+'</h3><div class="actions" style="margin-top:0"><button class="primary" onclick="checkBatch('+batchNum+')">Check My Answers (Questions '+batchStart+'–'+batchEnd+')</button><button class="secondary" onclick="toggleBatchKey('+batchNum+')">Show / Hide Answer Key</button></div><div class="batch-result" id="batchResult'+batchNum+'" aria-live="polite"></div><div class="batch-key" id="batchKey'+batchNum+'"><h4>Answer Key — Questions '+batchStart+'–'+batchEnd+'</h4><div id="batchKeyContent'+batchNum+'"></div></div>';
+      tools.innerHTML='<h3>Questions '+batchStart+'–'+batchEnd+'</h3><div class="actions" style="margin-top:0"><button class="primary" onclick="checkBatch('+batchNum+')">Check My Answers (Questions '+batchStart+'–'+batchEnd+')</button><button class="secondary batch-key-toggle" id="toggleBatchKey'+batchNum+'" onclick="toggleBatchKey('+batchNum+')" disabled>Show / Hide Answer Key</button></div><div class="batch-result" id="batchResult'+batchNum+'" aria-live="polite"></div><div class="batch-key" id="batchKey'+batchNum+'"><h4>Answer Key — Questions '+batchStart+'–'+batchEnd+'</h4><div id="batchKeyContent'+batchNum+'"></div></div>';
       d.insertAdjacentElement("afterend",tools);
     }
   });
@@ -180,6 +180,8 @@ function checkBatch(n){
     const answerButton=document.querySelector('#showAnswer'+i); if(answerButton) answerButton.disabled=false;
   }
   checkedBatches.add(n);
+  const keyToggle=document.querySelector('#toggleBatchKey'+n);
+  if(keyToggle){keyToggle.disabled=false;keyToggle.style.opacity='1';}
   const result=document.querySelector('#batchResult'+n);result.style.display='block';
   result.innerHTML='<b>Score for questions '+(r.start+1)+'–'+r.end+': '+score+' / '+(r.end-r.start)+' ('+Math.round(score/(r.end-r.start)*100)+'%)</b><p>You answered '+answered+' of '+(r.end-r.start)+' questions in this group.</p><p><b>Answers are now locked for this group.</b></p>';
   const checkButton=document.querySelector('#batchTools'+n+' .primary');
@@ -216,6 +218,7 @@ function resetExam(){
   document.querySelectorAll('.batch-result,.batch-key').forEach(e=>{e.style.display='none';});
   document.querySelectorAll('.batch-key div').forEach(e=>e.innerHTML='');
   document.querySelectorAll('.batch-tools .primary').forEach((button,index)=>{const n=index+1,r=batchRange(n);button.disabled=false;button.style.opacity='1';button.textContent='Check My Answers (Questions '+(r.start+1)+'–'+r.end+')';});
+  document.querySelectorAll('.batch-key-toggle').forEach(button=>{button.disabled=true;button.style.opacity='.55';});
   const final=document.querySelector('#finalResults');final.style.display='none';final.innerHTML='';
   scrollTo({top:0,behavior:'smooth'});
 }
